@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .main-container {
             display: flex;
@@ -38,52 +39,41 @@
 
         <!-- Main Content -->
         <main class="content">
-            <h3>Customers</h3>
+            <h3><span style="color: black;">Customers</span></h3>
             <hr>
-            <div class="d-flex align-items-center justify-content-between">
-                <h1 class="mb-0">List of Customers</h1>
-                <a href="{{ route('customers.create') }}" class="btn btn-primary">Add Customer</a>
-            </div>
-            <hr />
-            @if(Session::has('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ Session::get('success') }}
-                </div>
-            @endif
-            <table class="table table-hover">
-                <thead class="table-primary">
+            <a href="{{ route('customers.create') }}" class="btn btn-primary mb-3">Add Customer</a>
+            <table class="table table-bordered">
+                <thead>
                     <tr>
                         <th>Customer ID</th>
                         <th>Name</th>
                         <th>Phone Number</th>
                         <th>Created At</th>
                         <th>Updated At</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($customers as $customer)
-                        <tr>
-                            <td class="align-middle">{{ $customer->customer_id }}</td>
-                            <td class="align-middle">{{ $customer->customer_name }}</td>
-                            <td class="align-middle">{{ $customer->customer_phone_number }}</td>
-                            <td class="align-middle">{{ $customer->created_at }}</td>
-                            <td class="align-middle">{{ $customer->updated_at }}</td>
-                            <td class="align-middle">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ route('customers.edit', ['customer' => $customer->customer_id]) }}" class="btn btn-secondary">Edit</a>
-                                    <form action="{{ route('customers.destroy', ['customer' => $customer->customer_id]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr data-customer-id="{{ $customer->customer_id }}">
+                        <td>{{ $customer->customer_id }}</td>
+                        <td>{{ $customer->customer_name }}</td>
+                        <td>{{ $customer->customer_phone_number }}</td>
+                        <td>{{ $customer->created_at }}</td>
+                        <td>{{ $customer->updated_at }}</td>
+                        <td class="actions-column">
+                            <a href="{{ route('customers.edit', ['customer' => $customer->customer_id]) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('customers.destroy', ['customer' => $customer->customer_id]) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td class="text-center" colspan="6">No customers found</td>
-                        </tr>
+                    <tr>
+                        <td class="text-center" colspan="6">No customers found</td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>

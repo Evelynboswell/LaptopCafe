@@ -152,7 +152,7 @@
                                     <tr>
                                         <td>Tgl Masuk</td>
                                         <td>:</td>
-                                        <td><input type="date" name="entry_date" class="form-control" value="{{ $serviceTransaction->entry_date }}" required></td>
+                                        <td><input type="date" name="entry_date" id="entry_date" class="form-control" value="{{ $serviceTransaction->entry_date }}" required></td>
                                         <td width="600 px"></td>
                                         <td colspan="3" class="align-end">
                                             <label for="status">Status:</label>
@@ -166,7 +166,7 @@
                                     <tr>
                                         <td>Tgl Keluar</td>
                                         <td>:</td>
-                                        <td><input type="date" name="takeout_date" class="form-control" value="{{ $serviceTransaction->takeout_date }}" required></td>
+                                        <td><input type="date" name="takeout_date" id="takeout_date" class="form-control" value="{{ $serviceTransaction->takeout_date }}" required></td>
                                         <td colspan="6"></td>
                                     </tr>
                                 </table>
@@ -270,6 +270,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            var today = new Date().toISOString().split('T')[0];
+            $('#entry_date').attr('min', today);
+            $('#takeout_date').attr('min', today);
+            $('#warranty_start_date').attr('min', today);
+
             $('#customer_id').change(function() {
                 var customerId = $(this).val();
                 $('#laptop_id option').each(function() {

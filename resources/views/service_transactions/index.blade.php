@@ -48,8 +48,8 @@
                         <td>{{ $transaction->takeout_date }}</td>
                         <td>{{ $transaction->status }}</td>
                         <td class="actions-column">
-                            <a href="{{ route('service_transactions.edit', $transaction->transaction_id) }}" class="btn btn-sm btn-warning">Edit</a>
                             @if($transaction->status == 'pending')
+                            <a href="{{ route('service_transactions.edit', $transaction->transaction_id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <button class="btn btn-sm btn-success pay-button" data-bs-toggle="modal" data-bs-target="#payModal" data-transaction="{{ $transaction }}">Pay</button>
                             @elseif($transaction->status == 'completed')
                             <a href="{{ route('service_transactions.show', $transaction->transaction_id) }}" class="btn btn-sm btn-info">View</a>

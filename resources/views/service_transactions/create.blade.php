@@ -126,16 +126,16 @@
                             <td colspan="9">
                                 <table class="no-border">
                                     <tr>
-                                        <td>No Faktur</td>
+                                        <td>Invoice Number</td>
                                         <td>:</td>
                                         <td><input type="text" name="invoice_number" class="form-control" value="{{ $nextInvoiceNumber }}" required readonly></td>
                                         <td width="600 px"></td>
                                         <td class="align-right total-transaksi-container">
-                                            <label for="total_price">Total Transaksi</label>
+                                            <label for="total_price">Total Transaction</label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Teknisi</td>
+                                        <td>Technician</td>
                                         <td>:</td>
                                         <td>
                                             <select name="technician_id" class="form-control" required>
@@ -149,9 +149,9 @@
                                         <td><input type="text" name="total_price" id="total_price" class="form-control total-price-input" placeholder="Rp 0,-" required readonly></td>
                                     </tr>
                                     <tr>
-                                        <td>Tgl Masuk</td>
+                                        <td>Entry Date</td>
                                         <td>:</td>
-                                        <td><input type="date" name="entry_date" class="form-control" required></td>
+                                        <td><input type="date" name="entry_date" class="form-control" required id="entry_date"></td>
                                         <td width="600 px"></td>
                                         <td colspan="3" class="align-end">
                                             <label for="status">Status:</label>
@@ -163,9 +163,9 @@
                                         <td colspan="2"></td>
                                     </tr>
                                     <tr>
-                                        <td>Tgl Keluar</td>
+                                        <td>Takeout Date</td>
                                         <td>:</td>
-                                        <td><input type="date" name="takeout_date" class="form-control" required></td>
+                                        <td><input type="date" name="takeout_date" class="form-control" required id="takeout_date"></td>
                                         <td colspan="6"></td>
                                     </tr>
                                 </table>
@@ -173,10 +173,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Pelanggan & Laptop <br><br>
+                            <td>Customer & Laptop <br><br>
                                 <table class="no-border">
                                     <tr>
-                                        <td>Pelanggan</td>
+                                        <td>Customer</td>
                                         <td>:</td>
                                         <td>
                                             <select name="customer_id" id="customer_id" class="form-control" required>
@@ -202,13 +202,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Deskripsi Masalah</td>
+                                        <td>Problem Description</td>
                                         <td>:</td>
                                         <td><textarea rows="4" cols="50" name="problem_description" id="problem_description" class="form-control" required></textarea></td>
                                     </tr>
                                 </table>
                             </td>
-                            <td>Jasa Servis <br><br>
+                            <td>Service <br><br>
                                 <table class="no-border">
                                     <tr>
                                         <td>Service</td>
@@ -228,20 +228,20 @@
                                     </tr>
                                 </table>
                             </td>
-                            <td>Garansi <br><br>
+                            <td>Warranty <br><br>
                                 <table class="no-border">
                                     <tr>
-                                        <td>No. Garansi</td>
+                                        <td>Warranty Number</td>
                                         <td>:</td>
                                         <td><input type="text" name="warranty_id" class="form-control" value="{{ $nextWarrantyNumber }}" required readonly></td>
                                     </tr>
                                     <tr>
-                                        <td>Tgl. Mulai</td>
+                                        <td>Start Date</td>
                                         <td>:</td>
                                         <td><input type="date" name="warranty_start_date" id="warranty_start_date" class="form-control" required></td>
                                     </tr>
                                     <tr>
-                                        <td>Tgl. Akhir</td>
+                                        <td>End Date</td>
                                         <td>:</td>
                                         <td><input type="date" name="warranty_end_date" id="warranty_end_date" class="form-control" required readonly></td>
                                     </tr>
@@ -267,6 +267,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Set the minimum date to today for date fields
+            var today = new Date().toISOString().split('T')[0];
+            $('#entry_date').attr('min', today);
+            $('#takeout_date').attr('min', today);
+            $('#warranty_start_date').attr('min', today);
+
             $('#customer_id').change(function() {
                 var customerId = $(this).val();
                 $('#laptop_id option').each(function() {
